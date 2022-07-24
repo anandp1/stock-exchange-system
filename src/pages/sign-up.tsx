@@ -1,23 +1,28 @@
 import { GetServerSideProps } from "next";
-import { getSession, signIn } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useState } from "react";
+import useSWR from "swr";
 
-const SignIn: React.FC = () => {
+const SignUp: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [shouldFetch, setShouldFetch] = useState(false);
 
-  const router = useRouter();
+  const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-  const handleSignIn = () => {
-    signIn("credentials", {
-      username,
-      password,
-      redirect: false,
-    });
+  const { data } = useSWR(
+    shouldFetch
+      ? `/api/sign-up?username=${encodeURIComponent(
+          username
+        )}&password=${encodeURIComponent(password)}`
+      : null,
+    fetcher
+  );
 
-    router.push("/");
+  const handleSignUp = () => {
+    console.log("her");
+    setShouldFetch(true);
   };
 
   return (
@@ -53,20 +58,15 @@ const SignIn: React.FC = () => {
             onChange={(event) => setPassword(event.target.value)}
           />
         </div>
-        <div className="flex items-center justify-between">
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="button"
-            onClick={handleSignIn}
-          >
-            Sign In
-          </button>
-          <Link href="/sign-up">
+        <div className="w-full">
+          <Link href="/sign-in">
             <button
-              className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              disabled={shouldFetch}
+              className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="button"
+              onClick={handleSignUp}
             >
-              Sign Up
+              Create Account
             </button>
           </Link>
         </div>
@@ -97,4 +97,4 @@ const getServerSideProps: GetServerSideProps = async (context) => {
 
 export { getServerSideProps };
 
-export default SignIn;
+export default SignUp;

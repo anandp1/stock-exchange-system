@@ -33,29 +33,32 @@ async function auth(request: NextApiRequest, response: NextApiResponse) {
           // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
           // You can also use the `req` object to obtain additional parameters
           // (i.e., the request IP address)
-          const res = await fetch(`${process.env.NEXTAUTH_URL}/api/hello`, {
+
+          const res = await fetch(`${process.env.NEXTAUTH_URL}/api/sign-in`, {
             method: "POST",
             body: JSON.stringify(credentials),
             headers: { "Content-Type": "application/json" },
           });
+
           const user = await res.json();
 
-          //   console.log(user);
-          // If no error and we have user data, return it
           if (res.ok && user) {
             return user;
           }
-          // Return null if user data could not be retrieved
           return null;
         },
       }),
     ],
+    pages: {
+      signIn: "/sign-in",
+      error: "/sign-in", // Error code passed in query string as ?error=
+    },
     session: {
       strategy: "jwt",
     },
     adapter: MongoDBAdapter(getMongoClient()),
     callbacks: {
-      async signIn({ account }) {
+      async signIn({ account, credentials }) {
         if (account.provider === "credentials") {
           return true;
         }
@@ -64,31 +67,6 @@ async function auth(request: NextApiRequest, response: NextApiResponse) {
       },
 
       async session({ session }) {
-        console.log(session);
-        const client = await getMongoClient();
-        const user = await client
-          .db(process.env.MONGODB_NAME)
-          .collection("users")
-          .findOne({ email: session?.user?.email });
-
-        if (!user) {
-          const userToAdd = {
-            name: session?.user?.name,
-            email: session?.user?.email,
-            image: session?.user?.image,
-            updatedAt: new Date(),
-          };
-
-          await client
-            .db(process.env.MONGODB_NAME)
-            .collection("users")
-            .updateOne(
-              { email: session?.user?.email },
-              { $set: { ...userToAdd } },
-              { upsert: true }
-            );
-        }
-
         return session;
       },
     },
