@@ -8,12 +8,12 @@ interface LayoutProps {
 
 const Layout = ({ children, currentPage }: LayoutProps): JSX.Element => {
   return (
-    <>
+    <div className="h-screen overflow-y-hidden">
       <Nav currentPage={currentPage} />
-      <div className={"container mx-auto flex max-w-7xl flex-col px-4"}>
+      <div className={"w-full h-screen bg-gradient-to-b from-emerald-50"}>
         {children}
       </div>
-    </>
+    </div>
   );
 };
 

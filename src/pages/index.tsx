@@ -5,8 +5,8 @@ import { Layout } from "../components/shared/layout";
 const Home: NextPage = () => {
   return (
     <Layout currentPage={"Home"}>
-      <div>
-        <div className="flex flex-row justify-evenly">Hello!</div>
+      <div className="">
+        <div className="flex flex-row justify-evenly"></div>
       </div>
     </Layout>
   );
