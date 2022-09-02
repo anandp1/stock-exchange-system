@@ -13,12 +13,13 @@ const Nav = (props: navProps): JSX.Element => {
   return (
     <div
       role="neo-nav"
-      className="flex flex-row items-center gap-24 bg-white my-3"
+      className="flex flex-row items-center gap-12 bg-white my-3"
     >
-      <div className="justify-center gap-4 mx-3 flex flex-row">
+      <div className="justify-center gap-4 ml-3 flex flex-row">
         <ArrowTrendingUp />
         <p className="font-bold">Trade</p>
       </div>
+      <p className="my-auto flex mx-auto">|</p>
       <div className="flex w-full items-center space-x-4">
         {navigationOptions.map((item) =>
           item.name === props.currentPage ? (
