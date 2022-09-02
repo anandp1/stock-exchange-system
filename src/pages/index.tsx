@@ -5,6 +5,7 @@ import { Chart } from "react-chartjs-2";
 
 import { DollarSign } from "../components/logo/dollar-sign";
 import { Layout } from "../components/shared/layout";
+import { WatchList } from "../components/home/watch-list";
 
 const Home: NextPage = () => {
   const data = {
@@ -18,52 +19,12 @@ const Home: NextPage = () => {
     ],
   };
 
-  const items = [
-    {
-      symbol: "APPL",
-      name: "Apple Inc",
-      price: 123.45,
-      change: 0.45,
-      changePercent: 0.45,
-    },
-    {
-      symbol: "APPL",
-      name: "Apple Inc",
-      price: 123.45,
-      change: 0.45,
-      changePercent: 0.45,
-    },
-
-    {
-      symbol: "APPL",
-      name: "Apple Inc",
-      price: 123.45,
-      change: 0.45,
-      changePercent: 0.45,
-    },
-
-    {
-      symbol: "APPL",
-      name: "Apple Inc",
-      price: 123.45,
-      change: 0.45,
-      changePercent: 0.45,
-    },
-    {
-      symbol: "APPL",
-      name: "Apple Inc",
-      price: 123.45,
-      change: 0.45,
-      changePercent: 0.45,
-    },
-  ];
-
   return (
     <Layout currentPage={"Home"}>
-      <div className="flex flex-col">
-        <div className="flex flex-col mt-20 ml-8">
+      <div className="flex flex-col mx-72">
+        <div className="flex flex-col mt-40">
           <p className="text-gray-500 text-sm font-bold">
-            Good afternoon, Anand You have
+            Good afternoon, Anand. You have
           </p>
           <div className="flex flex-row mt-2 items-center">
             <DollarSign />
@@ -71,46 +32,15 @@ const Home: NextPage = () => {
           </div>
         </div>
         <div className="flex flex-row mt-20">
-          <div className="flex flex-col ml-8">
+          <div className="flex flex-col">
             <p className="text-gray-500 text-sm font-bold mb-3">All Time</p>
             <Chart type="line" data={data} />
           </div>
-          <div className="flex flex-col ml-80">
+          <div className="flex flex-col justify-end ml-auto mr-8">
             <p className="text-gray-500 text-sm font-bold mb-3">
               Your Watchlist
             </p>
-            <div className="rounded-lg bg-white shadow-md w-full">
-              <ul
-                role="list"
-                className="divide-y max-h-80 scrollbar-hide overflow-y-auto w-80 divide-gray-200"
-              >
-                {items.map((item) => (
-                  <li key={item.symbol} className="px-6 py-5">
-                    <div className="flex flex-row justify-between">
-                      <div className="flex flex-col">
-                        <p className="text-gray-800 text-sm font-bold">
-                          {item.symbol}
-                        </p>
-                        <p className="text-gray-500 text-xs font-medium">
-                          {item.name}
-                        </p>
-                      </div>
-                      <div className="flex flex-col">
-                        <p className="ml-auto text-gray-800 text-sm font-bold">
-                          ${item.price}
-                        </p>
-                        <div className="flex flex-row text-xs font-medium">
-                          <p className="text-gray-500">-${item.change} | </p>{" "}
-                          <p className="ml-1 text-gray-500">
-                            {item.changePercent}%
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <WatchList />
           </div>
         </div>
       </div>
@@ -118,6 +48,7 @@ const Home: NextPage = () => {
   );
 };
 
+// at the bottom put top movers
 // portfolio left side has all the stocks right side has a graph with your money for the stock selected
 
 const getServerSideProps: GetServerSideProps = async (context) => {
