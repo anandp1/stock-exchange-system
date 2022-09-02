@@ -1,7 +1,9 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import Link from "next/link";
-import classnames from "classnames";
+
 import { navigationOptions } from "../../lib/navigation-options";
+import { ArrowTrendingUp } from "../logo/arrow-trending-up";
+import { SearchBar } from "../search-bar";
 
 export interface navProps {
   currentPage: string;
@@ -9,29 +11,31 @@ export interface navProps {
 
 const Nav = (props: navProps): JSX.Element => {
   return (
-    <div role="neo-nav" className="flex flex-row items-center bg-slate-900">
-      <div className="justify-center">
-        <a
-          href="https://www.flaticon.com/free-icons/trend"
-          className="flex w-24"
-          title="trend icons"
-        ></a>
+    <div
+      role="neo-nav"
+      className="flex flex-row items-center gap-24 bg-white my-3"
+    >
+      <div className="justify-center gap-4 mx-3 flex flex-row">
+        <ArrowTrendingUp />
+        <p className="font-bold">Trade</p>
       </div>
-      <div className="flex w-full items-center justify-end space-x-4">
-        {navigationOptions.map((item, index) => (
-          <Link key={index} href={item.navLink}>
-            <a
-              data-testid={`navigation-option-${item.name}`}
-              className={classnames(
-                item.name === props.currentPage
-                  ? "text-md hidden cursor-default rounded-md bg-gray-900 px-3 py-2 font-medium text-white md:block"
-                  : "text-md hidden rounded-md px-3 py-2 font-medium text-gray-300 hover:bg-gray-700 hover:text-white md:block"
-              )}
-            >
-              {item.name}
-            </a>
-          </Link>
-        ))}
+      <div className="flex w-full items-center space-x-4">
+        {navigationOptions.map((item) =>
+          item.name === props.currentPage ? (
+            <Link key={item.name} href={item.navLink}>
+              <a className="bg-gray-300 text-gray-500 cursor-default px-3 py-2 rounded-md text-sm font-bold">
+                {item.name}
+              </a>
+            </Link>
+          ) : (
+            <Link key={item.name} href={item.navLink}>
+              <a className="text-gray-500 hover:bg-gray-300 px-3 py-2 rounded-md text-sm font-bold">
+                {item.name}
+              </a>
+            </Link>
+          )
+        )}
+        <SearchBar />
       </div>
     </div>
   );
