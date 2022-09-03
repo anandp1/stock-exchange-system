@@ -44,6 +44,9 @@ const Home: NextPage = () => {
             <WatchList />
           </div>
         </div>
+        <div className="flex flex-col">
+          <p className="text-gray-500 text-sm font-bold mb-3">Top Movers</p>
+        </div>
       </div>
     </Layout>
   );
