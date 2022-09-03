@@ -1,11 +1,10 @@
 import type { GetServerSideProps, NextPage } from "next";
 import { getSession } from "next-auth/react";
-import "chart.js/auto";
-import { Chart } from "react-chartjs-2";
 
 import { DollarSign } from "../components/logo/dollar-sign";
 import { Layout } from "../components/shared/layout";
 import { WatchList } from "../components/home/watch-list";
+import { Chart } from "../components/shared/chart";
 
 const Home: NextPage = () => {
   const data = {
@@ -32,11 +31,13 @@ const Home: NextPage = () => {
           </div>
         </div>
         <div className="flex flex-row mt-20">
-          <div className="flex flex-col">
+          <div className="flex flex-col basis-2/3">
             <p className="text-gray-500 text-sm font-bold mb-3">All Time</p>
-            <Chart type="line" data={data} />
+            <div className="w-full ">
+              <Chart />
+            </div>
           </div>
-          <div className="flex flex-col justify-end ml-auto mr-8">
+          <div className="flex flex-col ml-auto mr-8">
             <p className="text-gray-500 text-sm font-bold mb-3">
               Your Watchlist
             </p>
