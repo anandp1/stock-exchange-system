@@ -133,31 +133,4 @@ const Chart = () => (
   />
 );
 
-// const Chart: React.FC = () => {
-//   const options = { style: "currency", currency: "USD" };
-//   const numberFormat = new Intl.NumberFormat("en-US", options);
-//   const config = {
-//     rangeSelector: {
-//       selected: 1,
-//     },
-//     title: {
-//       text: "AAPL Stock Price",
-//     },
-//     series: [
-//       {
-//         name: "AAPL",
-//         data: priceData,
-//         tooltip: {
-//           valueDecimals: 2,
-//         },
-//       },
-//     ],
-//   };
-//   return (
-//     <div>
-//       <ReactHighcharts config={config}></ReactHighcharts>
-//     </div>
-//   );
-// };
-
 export { Chart };
