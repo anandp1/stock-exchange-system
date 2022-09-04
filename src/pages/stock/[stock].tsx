@@ -1,12 +1,18 @@
 /* eslint-disable react/no-unescaped-entities */
+import { useState } from "react";
+
 import { DollarSign } from "../../components/logo/dollar-sign";
 import { Chart } from "../../components/shared/chart";
 import { Layout } from "../../components/shared/layout";
+import { BuyModal } from "../../components/stock/buy-modal";
 
 const Stock: React.FC = () => {
+  const [buyClicked, setBuyClicked] = useState(false);
+
   return (
     <Layout currentPage="Stock">
       <div className="flex mx-72 h-full">
+        {buyClicked && <BuyModal setBuyClicked={setBuyClicked} />}
         <div className="flex flex-col my-40 border rounded-lg shadow-md w-full">
           <div className="grid grid-cols-5 divide-x-2 mt-20">
             <div className="flex flex-col">
@@ -143,8 +149,11 @@ const Stock: React.FC = () => {
                   </li>
                 </ul>
               </div>
-              <div className="flex flex-row mt-4 gap-3">
-                <button className="w-20 bg-gray-800 hover:bg-zinc-400 text-white font-medium py-2 px-4 rounded-full">
+              <div className="flex flex-row mt-6 gap-3">
+                <button
+                  className="w-20 bg-gray-800 hover:bg-zinc-400 text-white font-medium py-2 px-4 rounded-full"
+                  onClick={() => setBuyClicked(true)}
+                >
                   Buy
                 </button>
                 <button className="w-20 bg-white border border-gray-800 hover:bg-neutral-100 text-black font-medium py-2 px-4 rounded-full">

@@ -33,7 +33,7 @@ const Home: NextPage = () => {
         <div className="flex flex-row mt-20">
           <div className="flex flex-col basis-2/3">
             <p className="text-gray-500 text-sm font-bold mb-3">All Time</p>
-            <div className="w-full ">
+            <div className="w-full">
               <Chart />
             </div>
           </div>
