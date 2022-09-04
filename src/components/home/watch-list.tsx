@@ -40,7 +40,7 @@ const WatchList: React.FC = () => {
   ];
 
   return (
-    <div className="rounded-lg bg-white shadow-md w-full h-full mb-4">
+    <div className="rounded-lg bg-white shadow-md w-full h-full">
       <ul
         role="list"
         className="divide-y max-h-80 scrollbar-hide overflow-y-auto w-80 divide-gray-200"

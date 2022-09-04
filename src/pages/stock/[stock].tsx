@@ -161,7 +161,7 @@ const Stock: React.FC = () => {
                 </button>
               </div>
             </div>
-            <div className="ml-auto">
+            <div className="ml-auto mb-8 mr-8">
               <Chart />
             </div>
           </div>

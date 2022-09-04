@@ -5,6 +5,7 @@ import Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
 // https://github.com/highcharts/highcharts-react#options-details
 
+// https://www.highcharts.com/docs/stock/range-selector -- docs for buttons
 const options = { style: "currency", currency: "USD" };
 const numberFormat = new Intl.NumberFormat("en-US", options);
 const configPrice = {
@@ -59,6 +60,7 @@ const configPrice = {
   chart: {
     height: 350,
     backgroundColor: null,
+    margin: 0, // fixed sizing where chart was filling the container
   },
 
   credits: {
@@ -73,6 +75,7 @@ const configPrice = {
     visible: false,
   },
   rangeSelector: {
+    x: -38,
     buttonTheme: {
       // styles for the buttons
       fill: "transparent",
@@ -124,8 +127,7 @@ const configPrice = {
     labelStyle: {
       display: "none",
     },
-    x: 0,
-    selected: 4, // option initally selected
+    selected: 1, // option initally selected
     inputEnabled: false, // removes date input
   },
 
