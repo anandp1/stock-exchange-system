@@ -26,9 +26,31 @@ const configPrice = {
     },
   },
   plotOptions: {
-    series: {
-      showInNavigator: true,
-      gapSize: 6,
+    area: {
+      // color: "#22c55e",
+      fillColor: {
+        linearGradient: {
+          x1: 0,
+          y1: 0,
+          x2: 0,
+          y2: 1,
+        },
+
+        stops: [
+          [0, "#22c55e"],
+          [1, "#ecfdf5"],
+        ],
+      },
+      marker: {
+        radius: 2,
+      },
+      lineWidth: 2,
+      states: {
+        hover: {
+          lineWidth: 2,
+        },
+      },
+      threshold: null,
     },
   },
   title: {
@@ -53,20 +75,22 @@ const configPrice = {
   rangeSelector: {
     buttonTheme: {
       // styles for the buttons
-      fill: "none",
-      stroke: "none",
-      "stroke-width": 0,
-      r: 13,
+      fill: "transparent",
+      r: "50%",
+      height: 25,
+      width: 25,
       style: {
-        color: "#6b7280",
+        color: "#1f2937",
         fontWeight: "bold",
       },
       states: {
-        hover: {},
+        hover: {
+          fill: null,
+        },
         select: {
-          fill: "#d4d4d8",
+          fill: "#1f2937",
           style: {
-            color: "#6b7280",
+            color: "#ffffff",
           },
         },
       },
@@ -75,22 +99,22 @@ const configPrice = {
       {
         type: "day",
         count: 1,
-        text: "1d",
+        text: "1D",
       },
       {
         type: "day",
         count: 7,
-        text: "7d",
+        text: "7D",
       },
       {
         type: "month",
         count: 1,
-        text: "1m",
+        text: "1M",
       },
       {
         type: "month",
         count: 3,
-        text: "3m",
+        text: "3M",
       },
       {
         type: "all",
@@ -113,15 +137,16 @@ const configPrice = {
   series: [
     {
       name: "Price",
-      type: "spline",
-
+      type: "area",
       data: priceData,
       tooltip: {
         valueDecimals: 2,
       },
+      color: "#22c55e",
     },
   ],
 };
+
 const Chart = () => (
   <HighchartsReact
     highcharts={Highcharts}
