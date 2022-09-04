@@ -11,7 +11,7 @@ const SearchBar: React.FC = () => {
         <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
           <svg
             aria-hidden="true"
-            className="w-5 h-5 text-gray-500 dark:text-gray-400"
+            className="w-5 h-5 text-gray-500"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -28,7 +28,7 @@ const SearchBar: React.FC = () => {
         <input
           type="search"
           id="default-search"
-          className="block p-2 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 "
+          className="block p-2 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300"
           placeholder="Search for a symbol or name"
           required
         />

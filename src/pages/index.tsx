@@ -22,8 +22,8 @@ const Home: NextPage = () => {
     <Layout currentPage={"Home"}>
       <div className="flex flex-col mx-72">
         <div className="flex flex-col mt-40">
-          <p className="text-gray-500 text-sm font-bold">
-            Good afternoon, Anand. You have
+          <p className="text-gray-500 text-sm font-bold ml-2">
+            Good afternoon. You have
           </p>
           <div className="flex flex-row mt-2 items-center">
             <DollarSign />

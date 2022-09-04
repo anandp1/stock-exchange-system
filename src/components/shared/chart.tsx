@@ -51,9 +51,6 @@ const configPrice = {
     visible: false,
   },
   rangeSelector: {
-    buttonPosition: {
-      align: "right",
-    },
     buttonTheme: {
       // styles for the buttons
       fill: "none",
