@@ -5,10 +5,26 @@ import { DollarSign } from "../components/logo/dollar-sign";
 import { Layout } from "../components/shared/layout";
 import { WatchList } from "../components/home/watch-list";
 import { Chart } from "../components/shared/chart";
+import useSWR from "swr";
 
 const Home: NextPage = () => {
+  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+  const { data: allStocksData, error: allStocksError } = useSWR(
+    "/api/shared/get-all-stocks",
+    fetcher
+  );
+
+  if (allStocksError) {
+    return <p>Error!</p>;
+  }
+
+  if (!allStocksData) {
+    return <p>Loading...</p>;
+  }
+
   return (
-    <Layout currentPage={"Home"}>
+    <Layout currentPage={"Home"} allStocksData={allStocksData}>
       <div className="flex flex-col mx-72">
         <div className="flex flex-col mt-40">
           <p className="text-gray-500 text-sm font-bold ml-2">

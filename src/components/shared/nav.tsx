@@ -4,12 +4,14 @@ import Link from "next/link";
 import { navigationOptions } from "../../lib/navigation-options";
 import { ArrowTrendingUp } from "../logo/arrow-trending-up";
 import { SearchBar } from "../search-bar";
+import { APIStock } from "../../pages/api/shared/get-all-stocks";
 
-export interface navProps {
+export interface NavProps {
   currentPage: string;
+  allStocksData: APIStock[];
 }
 
-const Nav = (props: navProps): JSX.Element => {
+const Nav = ({ currentPage, allStocksData }: NavProps): JSX.Element => {
   return (
     <div
       role="neo-nav"
@@ -22,7 +24,7 @@ const Nav = (props: navProps): JSX.Element => {
       <p className="my-auto flex mx-auto">|</p>
       <div className="flex w-full items-center space-x-4">
         {navigationOptions.map((item) =>
-          item.name === props.currentPage ? (
+          item.name === currentPage ? (
             <Link key={item.name} href={item.navLink}>
               <a className="bg-gray-300 text-gray-500 cursor-default px-3 py-2 rounded-md text-sm font-bold">
                 {item.name}
@@ -36,7 +38,7 @@ const Nav = (props: navProps): JSX.Element => {
             </Link>
           )
         )}
-        <SearchBar />
+        <SearchBar allStocksData={allStocksData} />
       </div>
     </div>
   );
