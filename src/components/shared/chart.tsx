@@ -81,6 +81,7 @@ const Chart = ({ stockChartData }: ChartProps) => {
 
     xAxis: {
       visible: false,
+      minRange: 3600 * 1000,
     },
     rangeSelector: {
       x: -38,
@@ -113,9 +114,9 @@ const Chart = ({ stockChartData }: ChartProps) => {
           text: "1D",
         },
         {
-          type: "day",
-          count: 7,
-          text: "7D",
+          type: "week",
+          count: 1,
+          text: "1W",
         },
         {
           type: "month",
@@ -128,8 +129,8 @@ const Chart = ({ stockChartData }: ChartProps) => {
           text: "3M",
         },
         {
-          type: "all",
-          text: "All",
+          type: "ytd",
+          text: "YTD",
         },
       ],
       labelStyle: {
@@ -167,3 +168,78 @@ const Chart = ({ stockChartData }: ChartProps) => {
 };
 
 export { Chart };
+
+/* custom sizes
+Highcharts.getJSON('https://demo-live-data.highcharts.com/aapl-c.json', function (data) {
+	console.log(data)
+    // Create the chart
+    var chart = Highcharts.stockChart('container', {
+
+        chart: {
+            height: 400
+        },
+
+        title: {
+            text: 'Highstock Responsive Chart'
+        },
+
+        subtitle: {
+            text: 'Click small/large buttons or change window size to test responsiveness'
+        },
+
+        rangeSelector: {
+            selected: 1,
+             buttons: [
+              { type: 'day', count: 1, text: '1d' },
+              { type: 'week', count: 1, text: '1w' },
+              { type: 'month', count: 1, text: '1m' },
+              { type: 'month', count: 3, text: '3m' },
+              { type: 'month', count: 6, text: '6m' },
+              { type: 'ytd', text: 'YTD' }
+            ]
+        },
+
+        series: [{
+            name: 'AAPL Stock Price',
+            data: data,
+            type: 'area',
+            threshold: null,
+            tooltip: {
+                valueDecimals: 2
+            }
+        }],
+
+        responsive: {
+            rules: [{
+                condition: {
+                    maxWidth: 500
+                },
+                chartOptions: {
+                    chart: {
+                        height: 300
+                    },
+                    subtitle: {
+                        text: null
+                    },
+                    navigator: {
+                        enabled: false
+                    }
+                }
+            }]
+        }
+    });
+
+
+    $('#small').click(function () {
+        chart.setSize(400);
+    });
+
+    $('#large').click(function () {
+        chart.setSize(800);
+    });
+
+    $('#auto').click(function () {
+        chart.setSize(null);
+    });
+});
+*/

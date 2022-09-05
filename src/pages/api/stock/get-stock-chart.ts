@@ -10,7 +10,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   try {
     const response = await axios.get(
-      `https://cloud.iexapis.com/stable/stock/${symbol}/chart/3m?token=${process.env.API_TOKEN}`
+      `https://cloud.iexapis.com/stable/stock/${symbol}/chart/1y?token=${process.env.API_TOKEN}`
     );
 
     const formattedChartData = response.data.map((data: any) => {
