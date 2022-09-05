@@ -1,16 +1,45 @@
 /* eslint-disable react/no-unescaped-entities */
+import { useRouter } from "next/router";
 import { useState } from "react";
+import useSWR from "swr";
 
 import { DollarSign } from "../../components/logo/dollar-sign";
 import { Chart } from "../../components/shared/chart";
 import { Layout } from "../../components/shared/layout";
 import { BuyModal } from "../../components/stock/buy-modal";
+import { fetcher } from "../../lib/fetcher";
 
 const Stock: React.FC = () => {
   const [buyClicked, setBuyClicked] = useState(false);
+  const router = useRouter();
+
+  const { data: allStocksData, error: allStocksError } = useSWR(
+    "/api/shared/get-all-stocks",
+    fetcher
+  );
+
+  const symbol = router.asPath.split("/")[2];
+
+  const { data: stockQuote, error: stockQuoteError } = useSWR(
+    `/api/stock/get-stock-quote?symbol=${symbol}`,
+    fetcher
+  );
+
+  const { data: stockChartData, error: stockChartError } = useSWR(
+    `/api/stock/get-stock-chart?symbol=${symbol}`,
+    fetcher
+  );
+
+  if (allStocksError || stockQuoteError || stockChartError) {
+    return <p>Error!</p>;
+  }
+
+  if (!allStocksData || !stockQuote || !stockChartData) {
+    return <p>Loading...</p>;
+  }
 
   return (
-    <Layout currentPage="Stock">
+    <Layout currentPage="Stock" allStocksData={allStocksData}>
       <div className="flex mx-72 h-full">
         {buyClicked && <BuyModal setBuyClicked={setBuyClicked} />}
         <div className="flex flex-col my-40 border rounded-lg shadow-md w-full">
@@ -38,13 +67,17 @@ const Stock: React.FC = () => {
             <div className="flex flex-col ml-8">
               <div className="flex flex-row gap-14">
                 <div className="flex flex-col">
-                  <p className="text-gray-800 text-lg font-bold">AAPL</p>
+                  <p className="text-gray-800 text-lg font-bold">
+                    {stockQuote.symbol}
+                  </p>
                   <p className="text-gray-500 text-sm font-medium">
-                    Apple Inc - NASDAQ
+                    {stockQuote.companyName} - {stockQuote.primaryExchange}
                   </p>
                 </div>
                 <div className="flex flex-col">
-                  <p className="text-gray-800 text-lg font-bold">117.76</p>
+                  <p className="text-gray-800 text-lg font-bold">
+                    {stockQuote.delayedPrice}
+                  </p>
                   <p className="text-gray-500 text-sm font-medium">
                     Nov 19, 12:57PM EST - Disclaimer
                   </p>
@@ -56,14 +89,16 @@ const Stock: React.FC = () => {
                     <p className="text-gray-500 text-md font-medium">
                       Day's Change ($)
                     </p>
-                    <p className="ml-16 text-gray-500 text-md font-medium">9</p>
+                    <p className="ml-16 text-gray-500 text-md font-medium">
+                      {stockQuote.change}
+                    </p>
                   </li>
                   <li className="flex flex-row">
                     <p className="text-gray-500 text-md font-medium">
                       Day's Change (%)
                     </p>
                     <p className="text-gray-500 text-md font-medium ml-auto">
-                      9%
+                      {(Number(stockQuote.changePercent) * 100).toFixed(2)}%
                     </p>
                   </li>
                   <li className="flex flex-row">
@@ -71,7 +106,7 @@ const Stock: React.FC = () => {
                       Day's High
                     </p>
                     <p className="text-gray-500 text-md font-medium ml-auto">
-                      909
+                      {Number(stockQuote.high).toFixed(2)}
                     </p>
                   </li>
                   <li className="flex flex-row">
@@ -79,40 +114,48 @@ const Stock: React.FC = () => {
                       Day's Low
                     </p>
                     <p className="text-gray-500 text-md font-medium ml-auto">
-                      900
+                      {Number(stockQuote.low).toFixed(2)}
                     </p>
                   </li>
                   <li className="flex flex-row">
                     <p className="text-gray-500 text-md font-medium">
-                      52 Week High ($)
+                      52 Week High
                     </p>
                     <p className="text-gray-500 text-md font-medium ml-auto">
-                      999
+                      ${stockQuote.week52High}
                     </p>
                   </li>
                   <li className="flex flex-row">
                     <p className="text-gray-500 text-md font-medium">
-                      52 Week Low ($)
+                      52 Week Low
                     </p>
                     <p className="text-gray-500 text-md font-medium ml-auto">
-                      99
+                      ${stockQuote.week52Low}
                     </p>
                   </li>
                 </ul>
 
                 <ul>
                   <li className="flex flex-row">
-                    <p className="text-gray-500 text-md font-medium">
-                      Volume Current
+                    <p className="text-gray-500 text-md font-medium">Open</p>
+                    <p className="text-gray-500 text-md font-medium ml-auto">
+                      {stockQuote.open}
                     </p>
-                    <p className="ml-32 text-gray-500 text-md font-medium">9</p>
                   </li>
                   <li className="flex flex-row">
                     <p className="text-gray-500 text-md font-medium">
-                      Volume Average (10 Day Range)
+                      Volume Current
+                    </p>
+                    <p className="ml-32 text-gray-500 text-md font-medium">
+                      {stockQuote.volume}
+                    </p>
+                  </li>
+                  <li className="flex flex-row">
+                    <p className="text-gray-500 text-md font-medium">
+                      Volume Average
                     </p>
                     <p className="text-gray-500 text-md font-medium ml-auto">
-                      9
+                      {stockQuote.avgTotalVolume}
                     </p>
                   </li>
                   <li className="flex flex-row">
@@ -120,23 +163,7 @@ const Stock: React.FC = () => {
                       Market Cap
                     </p>
                     <p className="text-gray-500 text-md font-medium ml-auto">
-                      9,00T
-                    </p>
-                  </li>
-                  <li className="flex flex-row">
-                    <p className="text-gray-500 text-md font-medium">
-                      EPS (Most Recent)
-                    </p>
-                    <p className="text-gray-500 text-md font-medium ml-auto">
-                      9
-                    </p>
-                  </li>
-                  <li className="flex flex-row">
-                    <p className="text-gray-500 text-md font-medium">
-                      Big/Ask Price
-                    </p>
-                    <p className="text-gray-500 text-md font-medium ml-auto">
-                      900
+                      {stockQuote.marketCap}
                     </p>
                   </li>
                   <li className="flex flex-row">
@@ -144,7 +171,15 @@ const Stock: React.FC = () => {
                       P/E Ratio
                     </p>
                     <p className="text-gray-500 text-md font-medium ml-auto">
-                      90
+                      {stockQuote.peRatio}
+                    </p>
+                  </li>
+                  <li className="flex flex-row">
+                    <p className="text-gray-500 text-md font-medium">
+                      YTD Change
+                    </p>
+                    <p className="text-gray-500 text-md font-medium ml-auto">
+                      {(Number(stockQuote.ytdChange) * 100).toFixed(2)}%
                     </p>
                   </li>
                 </ul>
@@ -162,7 +197,7 @@ const Stock: React.FC = () => {
               </div>
             </div>
             <div className="ml-auto mb-8 mr-8">
-              <Chart />
+              <Chart stockChartData={stockChartData} />
             </div>
           </div>
         </div>

@@ -1,15 +1,14 @@
 import type { GetServerSideProps, NextPage } from "next";
 import { getSession } from "next-auth/react";
+import useSWR from "swr";
 
 import { DollarSign } from "../components/logo/dollar-sign";
 import { Layout } from "../components/shared/layout";
 import { WatchList } from "../components/home/watch-list";
 import { Chart } from "../components/shared/chart";
-import useSWR from "swr";
+import { fetcher } from "../lib/fetcher";
 
 const Home: NextPage = () => {
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
   const { data: allStocksData, error: allStocksError } = useSWR(
     "/api/shared/get-all-stocks",
     fetcher

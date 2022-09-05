@@ -1,0 +1,22 @@
+import type { NextApiRequest, NextApiResponse } from "next";
+import axios from "axios";
+
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  if (req.method !== "GET") {
+    return res.status(405).json({ message: "Method not allowed" });
+  }
+
+  const symbol = req.query.symbol as string;
+
+  try {
+    const response = await axios.get(
+      `https://cloud.iexapis.com/stable/stock/${symbol}/quote?token=${process.env.API_TOKEN}`
+    );
+
+    return res.status(200).json(response.data);
+  } catch {
+    return res.status(500).json({ message: `Internal server error` });
+  }
+};
+
+export default handler;
