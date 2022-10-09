@@ -66,11 +66,11 @@ const Stock: React.FC = () => {
           <div className="flex flex-row mt-auto">
             <div className="flex flex-col ml-8">
               <div className="flex flex-row gap-14">
-                <div className="flex flex-col">
-                  <p className="text-gray-800 text-lg font-bold">
+                <div className="flex flex-col max-w-2">
+                  <p className="text-gray-800 text-lg font-bold max-w-2">
                     {stockQuote.symbol}
                   </p>
-                  <p className="text-gray-500 text-sm font-medium">
+                  <p className="text-gray-500 text-sm font-medium max-w-2">
                     {stockQuote.companyName} - {stockQuote.primaryExchange}
                   </p>
                 </div>

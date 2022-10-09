@@ -136,7 +136,7 @@ const Chart = ({ stockChartData }: ChartProps) => {
       labelStyle: {
         display: "none",
       },
-      selected: 1, // option initally selected
+      selected: 3, // option initally selected
       inputEnabled: false, // removes date input
     },
 
@@ -149,7 +149,7 @@ const Chart = ({ stockChartData }: ChartProps) => {
       {
         name: "Price",
         type: "area",
-        data: stockChartData,
+        data: stockChartData ?? priceData,
         tooltip: {
           valueDecimals: 2,
         },
