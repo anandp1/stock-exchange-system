@@ -1,4 +1,4 @@
-## 📽️ About
+## About
 Stock Exchange System is a web app desinged to learn about the stock market. It provides you with fake money that you can use to test out your buying/selling strategies in real time!
 
 ## 👟 Getting Started
